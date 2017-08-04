@@ -404,3 +404,13 @@ type CompileError struct {
 func (e *CompileError) String() string {
 	return e.Pattern + " (" + strconv.Itoa(e.Offset) + "): " + e.Message
 }
+
+func (re Regexp) MatchAll(subject []byte, flags int) [][]byte {
+    m := re.Matcher(subject, 0)
+    all := [][]byte{}
+    for m.Match(subject, flags) {
+        all = append(all, subject[m.ovector[0]:m.ovector[1]])
+        subject = subject[m.ovector[1]:]
+    }
+    return all
+}

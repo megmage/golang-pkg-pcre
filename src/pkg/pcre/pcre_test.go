@@ -193,3 +193,15 @@ func TestReplaceAll(t *testing.T) {
 		t.Error("ReplaceAll2", result)
 	}
 }
+
+func TestMatchAll(t *testing.T) {
+    re := MustCompile(`food[\W]`, 0)
+    result := re.MatchAll([]byte("food, glorious food!"), 0)
+    if len(result) != 2 {
+        t.Errorf("Wanted 2 matches, got [%d] instead.", len(result))
+    } else if string(result[0]) != "food," {
+        t.Errorf("Want [food,] Got: [%s]\n", string(result[0]))
+    } else if string(result[1]) != "food!" {
+        t.Error("Want [food!] Got: [%s]\n", string(result[1]))
+    }
+}
